@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 
 public class AuthService {
     private ProfileRepository profileRepository;
+    AdminController adminController;
+    ProfileController profileController;
     public AuthService() {
     }
     public void login(String phone, String password) {
@@ -31,10 +33,8 @@ public class AuthService {
 
         ComponentContainer.currentProfile = profile;
         if (profile.getRole().equals(ProfileRole.ADMIN)) {
-            AdminController adminController = new AdminController();
             adminController.start();
         } else if (profile.getRole().equals(ProfileRole.USER)) {
-            ProfileController profileController = new ProfileController();
             profileController.start();
         } else {
             System.out.println("You don't have any role.");
@@ -61,8 +61,13 @@ public class AuthService {
         }
 
     }
-
     public void setProfileRepository(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
+    }
+    public void setAdminController(AdminController adminController) {
+        this.adminController = adminController;
+    }
+    public void setProfileController(ProfileController profileController) {
+        this.profileController = profileController;
     }
 }
