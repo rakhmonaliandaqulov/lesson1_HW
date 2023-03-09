@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <bean name="profileService" class="org.example.service.ProfileService">
+              <property name="cardService" ref="cardService"/>
+              <property name="profileRepository" ref="profileRepository"/>
+       </bean>
+
+       <bean name="terminalService" class="org.example.service.TerminalService"/>
+
+       <bean name="profileRepository" class="org.example.repository.ProfileRepository"/>
+       <bean name="authService" class="org.example.service.AuthService">
+              <property name="profileRepository" ref="profileRepository"/>
+       </bean>
+       <bean name="authController" class="org.example.controller.AuthController">
+              <property name="authService" ref="authService"/>
+       </bean>
+       <bean name="adminController" class="org.example.controller.AdminController">
+              <property name="profileService" ref="profileService"/>
+              <property name="terminalService" ref="terminalService"/>
+              <property name="cardService" ref="cardService"/>
+       </bean>
+       <bean name="cardService" class="org.example.service.CardService">
+              <property name="terminalService" ref="terminalService"/>
+              <property name="profileService" ref="profileService"/>
+       </bean>
+
+       <bean name="terminalRepository" class="org.example.repository.TerminalRepository"/>
+       <bean name="transactionRepository" class="org.example.repository.TransactionRepository"/>
+       <bean name="cardRepository" class="org.example.repository.CardRepository"/>
+       <bean name="profile" class="org.example.dto.Profile"/>
+
+
+
+
+</beans>
+
+

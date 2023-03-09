@@ -3,6 +3,7 @@ package org.example.controller;
 
 import org.example.container.ComponentContainer;
 import org.example.dto.Terminal;
+import org.example.service.CardService;
 import org.example.service.ProfileService;
 import org.example.service.TerminalService;
 import org.example.util.ScannerUtil;
@@ -11,8 +12,9 @@ import java.util.Scanner;
 
 public class AdminController {
     //    private CardService cardService = new CardService();
-    private ProfileService profileService = new ProfileService();
-    private TerminalService terminalService = new TerminalService();
+    private ProfileService profileService;
+    private TerminalService terminalService;
+    private CardService cardService;
 
     public void start() {
         boolean b = true;
@@ -126,11 +128,10 @@ public class AdminController {
         System.out.print("Enter card expired date (yyyy.MM.dd): ");
         String expiredDate = scanner.nextLine();
 
-        ComponentContainer.cardService.adminCreateCard(cardNumber, expiredDate);
+        cardService.adminCreateCard(cardNumber, expiredDate);
     }
 
-    private void cardList() {
-        ComponentContainer.cardService.cardList();
+    private void cardList(){cardService.cardList();
     }
 
     private void deleteCard() {
@@ -138,7 +139,7 @@ public class AdminController {
         Scanner scanner = new Scanner(System.in);
         String cardNumber = scanner.nextLine();
 
-        ComponentContainer.cardService.adminDeleteCard(cardNumber);
+        cardService.adminDeleteCard(cardNumber);
     }
 
     private void changeCardStatus() {
@@ -146,7 +147,7 @@ public class AdminController {
         Scanner scanner = new Scanner(System.in);
         String cardNumber = scanner.nextLine();
 
-        ComponentContainer.cardService.adminChangeStatus(cardNumber);
+        cardService.adminChangeStatus(cardNumber);
     }
 
     private void updateCard() {
@@ -157,7 +158,7 @@ public class AdminController {
         System.out.print("Enter card expired date (yyyy.MM.dd): ");
         String expiredDate = scanner.nextLine();
 
-        ComponentContainer.cardService.adminUpdateCard(cardNumber, expiredDate);
+        cardService.adminUpdateCard(cardNumber, expiredDate);
     }
 
 
@@ -270,5 +271,15 @@ public class AdminController {
 
     }
 
+    public void setProfileService(ProfileService profileService) {
+        this.profileService = profileService;
+    }
 
+    public void setTerminalService(TerminalService terminalService) {
+        this.terminalService = terminalService;
+    }
+
+    public void setCardService(CardService cardService) {
+        this.cardService = cardService;
+    }
 }

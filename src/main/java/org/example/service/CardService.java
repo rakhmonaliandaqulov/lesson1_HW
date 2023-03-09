@@ -13,10 +13,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CardService {
-    private TransactionService transactionService = ComponentContainer.transactionService;
-    private TerminalService terminalService = ComponentContainer.terminalService;
-
-    private ProfileService profileService = ComponentContainer.profileService;
+    private TransactionService transactionService;
+    private TerminalService terminalService;
+    private ProfileService profileService;
 
     public void addCardToProfile(String phone, String cardNum) {
         CardRepository cardRepository = ComponentContainer.cardRepository;
@@ -181,4 +180,15 @@ public class CardService {
         transactionService.createTransaction(card.getId(), null, amount, TransactionType.ReFill);
     }
 
+    public void setTransactionService(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
+
+    public void setTerminalService(TerminalService terminalService) {
+        this.terminalService = terminalService;
+    }
+
+    public void setProfileService(ProfileService profileService) {
+        this.profileService = profileService;
+    }
 }

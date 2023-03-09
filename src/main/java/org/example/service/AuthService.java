@@ -13,13 +13,12 @@ import org.example.util.MD5Util;
 import java.time.LocalDateTime;
 
 public class AuthService {
-
+    private ProfileRepository profileRepository;
     public AuthService() {
 
     }
 
     public void login(String phone, String password) {
-        ProfileRepository profileRepository = ComponentContainer.profileRepository;
         Profile profile = profileRepository.getProfileByPhoneAndPassword(phone, MD5Util.encode(password));
 
         if (profile == null) {
@@ -46,7 +45,6 @@ public class AuthService {
     }
 
     public void registration(Profile profile) {
-        ProfileRepository profileRepository = ComponentContainer.profileRepository;
         // check
         Boolean exist = profileRepository.isPhoneExist(profile.getPhone()); // unique
         if (exist) {
@@ -64,5 +62,9 @@ public class AuthService {
             System.out.println("Profile created.");
         }
 
+    }
+
+    public void setProfileRepository(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
     }
 }
