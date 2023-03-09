@@ -15,9 +15,7 @@ import java.time.LocalDateTime;
 public class AuthService {
     private ProfileRepository profileRepository;
     public AuthService() {
-
     }
-
     public void login(String phone, String password) {
         Profile profile = profileRepository.getProfileByPhoneAndPassword(phone, MD5Util.encode(password));
 
