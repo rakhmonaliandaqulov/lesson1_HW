@@ -7,9 +7,12 @@
               <property name="cardService" ref="cardService"/>
               <property name="profileRepository" ref="profileRepository"/>
        </bean>
-
-       <bean name="terminalService" class="org.example.service.TerminalService"/>
-
+       <bean name="transactionService" class="org.example.service.TransactionService">
+              <property name="transactionRepository" ref="transactionRepository"/>
+       </bean>
+       <bean name="terminalService" class="org.example.service.TerminalService">
+              <property name="terminalRepository" ref="terminalRepository"/>
+       </bean>
        <bean name="profileRepository" class="org.example.repository.ProfileRepository"/>
        <bean name="authService" class="org.example.service.AuthService">
               <property name="profileRepository" ref="profileRepository"/>
@@ -25,14 +28,16 @@
        <bean name="cardService" class="org.example.service.CardService">
               <property name="terminalService" ref="terminalService"/>
               <property name="profileService" ref="profileService"/>
+              <property name="transactionService" ref="transactionService"/>
+              <property name="cardRepository" ref="cardRepository"/>
        </bean>
-
+       <bean name="profileController" class="org.example.controller.ProfileController">
+              <property name="cardService" ref="cardService"/>
+       </bean>
        <bean name="terminalRepository" class="org.example.repository.TerminalRepository"/>
        <bean name="transactionRepository" class="org.example.repository.TransactionRepository"/>
        <bean name="cardRepository" class="org.example.repository.CardRepository"/>
        <bean name="profile" class="org.example.dto.Profile"/>
-
-
 
 
 </beans>

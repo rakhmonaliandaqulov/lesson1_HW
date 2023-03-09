@@ -16,6 +16,7 @@ public class CardService {
     private TransactionService transactionService;
     private TerminalService terminalService;
     private ProfileService profileService;
+    private CardRepository cardRepository;
 
     public void addCardToProfile(String phone, String cardNum) {
         CardRepository cardRepository = ComponentContainer.cardRepository;
@@ -164,7 +165,6 @@ public class CardService {
     }
 
     public void userRefillCard(String phone, String cardNumber, Double amount) {
-        CardRepository cardRepository = ComponentContainer.cardRepository;
         Card card = cardRepository.getCardByNumber(cardNumber);
         if (card == null) {
             System.out.println("Card not found");
@@ -190,5 +190,9 @@ public class CardService {
 
     public void setProfileService(ProfileService profileService) {
         this.profileService = profileService;
+    }
+
+    public void setCardRepository(CardRepository cardRepository) {
+        this.cardRepository = cardRepository;
     }
 }

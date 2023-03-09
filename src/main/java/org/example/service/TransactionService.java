@@ -9,6 +9,7 @@ import org.example.repository.TransactionRepository;
 import java.time.LocalDateTime;
 
 public class TransactionService {
+    TransactionRepository transactionRepository;
     public void createTransaction(Integer cardId, Integer terminalId, Double amount, TransactionType type) {
         Transaction transaction = new Transaction();
         transaction.setCardId(cardId);
@@ -16,8 +17,10 @@ public class TransactionService {
         transaction.setAmount(amount);
         transaction.setTransactionType(type);
         transaction.setCreatedDate(LocalDateTime.now());
-
-        TransactionRepository transactionRepository = ComponentContainer.transactionRepository;
         transactionRepository.createTransaction(transaction);
+    }
+
+    public void setTransactionRepository(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
     }
 }

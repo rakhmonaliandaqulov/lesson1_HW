@@ -10,10 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class TerminalService {
-
+    private TerminalRepository terminalRepository;
 
     public void addTerminal(Terminal terminal) {
-        TerminalRepository terminalRepository = ComponentContainer.terminalRepository;
         Terminal exist = terminalRepository.getTerminalByCode(terminal.getCode());
         if (exist != null) {
             System.out.println("Terminal code exists");
@@ -25,7 +24,6 @@ public class TerminalService {
     }
 
     public void terminalList() {
-        TerminalRepository terminalRepository = ComponentContainer.terminalRepository;
         List<Terminal> terminalList = terminalRepository.getTerminalList();
         for (Terminal terminal : terminalList) {
             System.out.println(terminal);
@@ -33,7 +31,6 @@ public class TerminalService {
     }
 
     public void updateTerminal(Terminal terminal) {
-        TerminalRepository terminalRepository = ComponentContainer.terminalRepository;
         Terminal exist = terminalRepository.getTerminalByCode(terminal.getCode());
         if (exist == null) {
             System.out.println("Terminal not found");
@@ -44,7 +41,6 @@ public class TerminalService {
     }
 
     public void changeTerminalStatus(String code) {
-        TerminalRepository terminalRepository = ComponentContainer.terminalRepository;
         Terminal terminal = terminalRepository.getTerminalByCode(code);
         if (terminal == null) {
             System.out.println("Terminal not found");
@@ -59,7 +55,6 @@ public class TerminalService {
     }
 
     public void deleteTerminal(String code) {
-        TerminalRepository terminalRepository = ComponentContainer.terminalRepository;
         Terminal terminal = terminalRepository.getTerminalByCode(code);
         if (terminal == null) {
             System.out.println("Terminal not found");
@@ -67,5 +62,9 @@ public class TerminalService {
         }
 
         terminalRepository.deleteTerminal(code);
+    }
+
+    public void setTerminalRepository(TerminalRepository terminalRepository) {
+        this.terminalRepository = terminalRepository;
     }
 }

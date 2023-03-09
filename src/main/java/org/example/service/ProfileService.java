@@ -10,8 +10,8 @@ import java.util.List;
 
 public class ProfileService {
 
-    private ProfileRepository profileRepository ;
-    private CardService cardService ;
+    private ProfileRepository profileRepository;
+    private CardService cardService;
 
     public void profileList() {
         List<Profile> profileList = profileRepository.getProfileList();
@@ -42,4 +42,5 @@ public class ProfileService {
     public void setCardService(CardService cardService) {
         this.cardService = cardService;
     }
+
 }
