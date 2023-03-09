@@ -38,10 +38,7 @@
        <bean name="transactionRepository" class="org.example.repository.TransactionRepository"/>
        <bean name="cardRepository" class="org.example.repository.CardRepository"/>
        <bean name="profile" class="org.example.dto.Profile"/>
-       <bean name="initDataBase" class="org.example.db.InitDataBase">
-              <property name="profileRepository" ref="profileRepository"/>
-              <property name="cardRepository" ref="cardRepository"/>
-       </bean>
+
 
 </beans>
 
