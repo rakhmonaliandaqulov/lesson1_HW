@@ -9,6 +9,8 @@
        <bean name="profileRepository" class="org.example.repository.ProfileRepository"/>
        <bean name="authService" class="org.example.service.AuthService">
               <property name="adminController" ref="adminController"/>
+              <property name="profileRepository" ref="profileRepository"/>
+              <property name="profileController" ref="profileController"/>
        </bean>
 
        <bean name="profileService" class="org.example.service.ProfileService">
@@ -22,6 +24,7 @@
        <bean name="cardService" class="org.example.service.CardService">
               <property name="transactionService" ref="transactionService"/>
               <property name="cardRepository" ref="cardRepository"/>
+              <property name="terminalRepository" ref="terminalRepository"/>
        </bean>
        <bean name="terminalService" class="org.example.service.TerminalService">
               <property name="terminalRepository" ref="terminalRepository"/>

@@ -246,4 +246,27 @@ public class CardRepository {
         }
         return 0;
     }
+    public int payment(String cardNumber, double cardBalance) {
+        try(Connection connection = DataBase.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement("update card set balance = ? where card_number = ?");
+            preparedStatement.setDouble(1, cardBalance);
+            preparedStatement.setString(2, cardNumber);
+            return preparedStatement.executeUpdate();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int payment2(String cardNumber, double amount) {
+        try(Connection connection = DataBase.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement("update card set balance = ? where card_number = ?");
+            preparedStatement.setDouble(1, amount);
+            preparedStatement.setString(2, cardNumber);
+            return preparedStatement.executeUpdate();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+        return 0;
+    }
 }

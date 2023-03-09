@@ -4,10 +4,14 @@ package org.example.controller;
 
 import org.example.container.ComponentContainer;
 import org.example.dto.Profile;
+import org.example.dto.Transaction;
 import org.example.service.CardService;
 import org.example.util.ScannerUtil;
 
+import java.util.List;
 import java.util.Scanner;
+
+import static org.example.container.ComponentContainer.transactionRepository;
 
 public class ProfileController {
     private CardService cardService;
@@ -115,14 +119,24 @@ public class ProfileController {
      * Transaction
      */
     private void transactionList() {
-
+        Profile profile = ComponentContainer.currentProfile;
+        System.out.print("*** Transaction List ***\n");
+        List<Transaction> transactionList = transactionRepository.usertransactionList();
+        transactionList.forEach(System.out::println);
     }
 
     private void payment() {
-
+        System.out.println("Enter card number: ");
+        Scanner scanner = new Scanner(System.in);
+        String cardNumber = scanner.nextLine();
+        System.out.println("Enter terminal code: ");
+        String terminalCode = scanner.nextLine();
+        Profile profile = ComponentContainer.currentProfile;
+        cardService.userPayment(profile.getPhone(), cardNumber, terminalCode);
     }
 
     public void setCardService(CardService cardService) {
         this.cardService = cardService;
     }
+
 }

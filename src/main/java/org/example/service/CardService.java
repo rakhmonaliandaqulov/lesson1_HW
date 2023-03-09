@@ -3,9 +3,11 @@ package org.example.service;
 
 import org.example.container.ComponentContainer;
 import org.example.dto.Card;
+import org.example.dto.Terminal;
 import org.example.enums.GeneralStatus;
 import org.example.enums.TransactionType;
 import org.example.repository.CardRepository;
+import org.example.repository.TerminalRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +19,7 @@ public class CardService {
     private TerminalService terminalService;
     private ProfileService profileService;
     private CardRepository cardRepository;
+    private TerminalRepository terminalRepository;
 
     public void addCardToProfile(String phone, String cardNum) {
         CardRepository cardRepository = ComponentContainer.cardRepository;
@@ -194,5 +197,32 @@ public class CardService {
 
     public void setCardRepository(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
+    }
+    public void userPayment(String phone, String cardNumber, String terminalCode) {
+        CardRepository cardRepository = ComponentContainer.cardRepository;
+        Terminal terminal = terminalRepository.getTerminalByCode(terminalCode);
+        Card card = cardRepository.getCardByNumber(cardNumber);
+        if (card == null) {
+            System.out.println("Card not found");
+            return;
+        }
+        if (terminal == null) {
+            System.out.println("Terminal not found");
+            return;
+        }
+        if (card.getPhone() == null || !card.getPhone().equals(phone)) {
+            System.out.println("Mazgi card not belongs to you.");
+            return;
+        }
+
+        cardRepository.payment(cardNumber, card.getBalance()-1400);
+        Card card1 = cardRepository.getCardByNumber("5555");
+        cardRepository.payment2("5555", card1.getBalance()+1400);
+        transactionService.createTransaction(card.getId(), terminal.getId(), 1400.0, TransactionType.Payment);
+        // make transaction
+    }
+
+    public void setTerminalRepository(TerminalRepository terminalRepository) {
+        this.terminalRepository = terminalRepository;
     }
 }

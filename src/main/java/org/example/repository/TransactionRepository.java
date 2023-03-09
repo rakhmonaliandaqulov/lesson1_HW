@@ -104,4 +104,27 @@ public class TransactionRepository {
         }
         return null;
     }
+
+    public List<Transaction> usertransactionList() {
+        try (Connection connection = DataBase.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from transaction");
+            List<Transaction> transactionList = new LinkedList<>();
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setId(resultSet.getInt("id"));
+                transaction.setCardId(resultSet.getInt("card_id"));
+                transaction.setAmount(resultSet.getDouble("amount"));
+                transaction.setTerminalId(resultSet.getInt("terminal_id"));
+                transaction.setTransactionType(TransactionType.valueOf(resultSet.getString("type")));
+                transaction.setCreatedDate(resultSet.getTimestamp("created_date").toLocalDateTime());
+                transactionList.add(transaction);
+            }
+            return transactionList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        return null;
+    }
 }

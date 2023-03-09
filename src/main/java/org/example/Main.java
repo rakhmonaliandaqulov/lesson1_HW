@@ -18,7 +18,7 @@ public class Main {
 //        authController.start();
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-        AuthController authController = (AuthController) context.getBean("authcontroller");
+        AuthController authController = (AuthController) context.getBean("authController");
         authController.start();
 
     }
