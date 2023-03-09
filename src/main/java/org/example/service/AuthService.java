@@ -41,7 +41,6 @@ public class AuthService {
         }
 
     }
-
     public void registration(Profile profile) {
         // check
         Boolean exist = profileRepository.isPhoneExist(profile.getPhone()); // unique
@@ -49,7 +48,6 @@ public class AuthService {
             System.out.println(" Phone already exist.");
             return;
         }
-
         profile.setStatus(GeneralStatus.ACTIVE);
         profile.setCreatedDate(LocalDateTime.now());
         profile.setRole(ProfileRole.USER);

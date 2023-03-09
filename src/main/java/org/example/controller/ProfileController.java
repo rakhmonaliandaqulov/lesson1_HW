@@ -15,7 +15,6 @@ import static org.example.container.ComponentContainer.transactionRepository;
 
 public class ProfileController {
     private CardService cardService;
-
     public void start() {
         boolean b = true;
 
@@ -53,8 +52,6 @@ public class ProfileController {
             }
         }
     }
-
-
     public void menu() {
         System.out.println("1. Add Card");
         System.out.println("2. Card List ");
@@ -65,11 +62,6 @@ public class ProfileController {
         System.out.println("7. Make Payment");
         System.out.println("0. Log out");
     }
-
-    /**
-     * Card
-     */
-
     private void addCard() {
         System.out.print("Enter card number: ");
 
@@ -78,13 +70,11 @@ public class ProfileController {
         Profile profile = ComponentContainer.currentProfile;
         cardService.addCardToProfile(profile.getPhone(), cardNumber);
     }
-
     private void cardList( ) {
         System.out.print("--- Card List ---");
         Profile profile = ComponentContainer.currentProfile;
         cardService.profileCardList(profile.getPhone());
     }
-
     private void changeCardStatus( ) {
         System.out.print("Enter card number: ");
 
@@ -93,7 +83,6 @@ public class ProfileController {
         Profile profile = ComponentContainer.currentProfile;
         cardService.userChangeCardStatus(profile.getPhone(), cardNumber);
     }
-
     private void deleteCard( ) {
         System.out.print("Enter card number: ");
         Scanner scanner = new Scanner(System.in);
@@ -102,7 +91,6 @@ public class ProfileController {
         Profile profile = ComponentContainer.currentProfile;
         cardService.userDeleteCard(profile.getPhone(), cardNumber);
     }
-
     private void refill( ) {
         System.out.print("Enter card number: ");
         Scanner scanner = new Scanner(System.in);
@@ -113,11 +101,6 @@ public class ProfileController {
         Profile profile = ComponentContainer.currentProfile;
         cardService.userRefillCard(profile.getPhone(), cardNumber, amount);
     }
-
-
-    /**
-     * Transaction
-     */
     private void transactionList() {
         Profile profile = ComponentContainer.currentProfile;
         System.out.print("*** Transaction List ***\n");

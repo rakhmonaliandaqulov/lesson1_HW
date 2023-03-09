@@ -15,7 +15,6 @@ public class ProfileService {
 
     public void profileList() {
         List<Profile> profileList = profileRepository.getProfileList();
-
         for (Profile profile : profileList) {
             System.out.println(profile);
         }
@@ -27,18 +26,15 @@ public class ProfileService {
             System.out.println("Profile not found");
             return;
         }
-
         if (profile.getStatus().equals(GeneralStatus.ACTIVE)) {
             profileRepository.changeProfileStatus(phone, GeneralStatus.BLOCK);
         } else {
             profileRepository.changeProfileStatus(phone, GeneralStatus.ACTIVE);
         }
     }
-
     public void setProfileRepository(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
-
     public void setCardService(CardService cardService) {
         this.cardService = cardService;
     }

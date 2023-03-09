@@ -53,7 +53,6 @@ public class TerminalService {
         }
 
     }
-
     public void deleteTerminal(String code) {
         Terminal terminal = terminalRepository.getTerminalByCode(code);
         if (terminal == null) {
@@ -63,7 +62,6 @@ public class TerminalService {
 
         terminalRepository.deleteTerminal(code);
     }
-
     public void setTerminalRepository(TerminalRepository terminalRepository) {
         this.terminalRepository = terminalRepository;
     }

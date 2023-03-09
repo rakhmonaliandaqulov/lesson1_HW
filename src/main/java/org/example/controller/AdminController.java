@@ -287,7 +287,6 @@ public class AdminController {
 
 
     }
-
     private void transactionBetweenDays() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter first date(d.M.yyyy): ");
@@ -342,23 +341,18 @@ public class AdminController {
         }
         transactionList.forEach(System.out::println);
     }
-
     public void setProfileService(ProfileService profileService) {
         this.profileService = profileService;
     }
-
     public void setTerminalService(TerminalService terminalService) {
         this.terminalService = terminalService;
     }
-
     public void setCardService(CardService cardService) {
         this.cardService = cardService;
     }
-
     public void setTransactionRepository(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
-
     public void setCardRepository(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }

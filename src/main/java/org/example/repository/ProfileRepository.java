@@ -151,8 +151,6 @@ public class ProfileRepository {
         }
         return 0;
     }
-
-
     public List<Profile> getProfileList() {
         try (Connection connection = DataBase.getConnection()) {
             Statement statement = connection.createStatement();
