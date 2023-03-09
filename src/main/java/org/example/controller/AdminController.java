@@ -2,12 +2,19 @@ package org.example.controller;
 
 
 import org.example.container.ComponentContainer;
+import org.example.dto.Card;
 import org.example.dto.Terminal;
+import org.example.dto.Transaction;
+import org.example.repository.CardRepository;
+import org.example.repository.TransactionRepository;
 import org.example.service.CardService;
 import org.example.service.ProfileService;
 import org.example.service.TerminalService;
 import org.example.util.ScannerUtil;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminController {
@@ -15,6 +22,8 @@ public class AdminController {
     private ProfileService profileService;
     private TerminalService terminalService;
     private CardService cardService;
+    private TransactionRepository transactionRepository;
+    private CardRepository cardRepository;
 
     public void start() {
         boolean b = true;
@@ -70,7 +79,7 @@ public class AdminController {
                 case 17:
                     transactionBetweenDays();
                 case 18:
-                    totalBalance();
+                    totalBalance(transactionList());
                 case 19:
                     transactionByTerminal();
                 case 20:
@@ -235,12 +244,15 @@ public class AdminController {
      * Transaction
      */
 
-    private void transactionList() {
-
+    private List<Transaction> transactionList() {
+        List<Transaction> transactionList = transactionRepository.admintransactionList();
+        transactionList.forEach(System.out::println);
+        return transactionList;
     }
 
     private void cardCompany() {
-
+        Card card = cardRepository.getCardByNumber("5555");
+        System.out.println("Balance -> " + card.getBalance());
     }
 
     /**
@@ -248,27 +260,87 @@ public class AdminController {
      */
 
     private void todayTransactionList() {
-
+        List<Transaction> transactionList = transactionRepository.admintransactionList();
+        for (Transaction transaction : transactionList) {
+            if (transaction.getCreatedDate().getDayOfMonth() == LocalDate.now().getDayOfMonth()) {
+                System.out.println(transaction);
+            }
+        }
     }
 
     private void transactionByDay() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter date of month: ");
+        String date = scanner.nextLine();
+        System.out.println("Enter month: ");
+        String month = scanner.nextLine();
+        System.out.println("Enter year: ");
+        String year = scanner.nextLine();
+        List<Transaction> transactionList = transactionRepository.admintransactionList();
+        for (Transaction transaction : transactionList) {
+            if ((String.valueOf(transaction.getCreatedDate().getDayOfMonth()).equals(date)) &&
+                    (String.valueOf(transaction.getCreatedDate().getMonthValue()).equals(month)) &&
+                    (String.valueOf(transaction.getCreatedDate().getYear()).equals(year))) {
+                System.out.println(transaction);
+            }
+        }
+
 
     }
 
     private void transactionBetweenDays() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter first date(d.M.yyyy): ");
+        String firstDate = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
+        LocalDate localDate2 = LocalDate.parse(firstDate, formatter);
+        System.out.println("Enter second date(d.M.yyyy): ");
+        String secondDate = scanner.nextLine();
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("d.M.yyyy");
+        LocalDate localDate1 = LocalDate.parse(secondDate, formatter1);
+        List<Transaction> transactionList = transactionRepository.admintransactionList();
+        for (Transaction transaction : transactionList) {
+            int year = transaction.getCreatedDate().getYear();
+            int month = transaction.getCreatedDate().getMonthValue();
+            int day = transaction.getCreatedDate().getDayOfMonth();
+            String mix = day + "." + month + "." + year;
+            DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("d.M.yyyy");
+            LocalDate localDate3 = LocalDate.parse(mix, formatter3);
+            if ((localDate3.isAfter(localDate2)) || (localDate3.isBefore(localDate1))) {
+                System.out.println(transaction);
+            }
+        }
 
     }
 
-    private void totalBalance() {
-
+    private void totalBalance(List<Transaction> transactionList) {
+        double amount = 0.0;
+        for (Transaction transaction : transactionList) {
+            amount += transaction.getAmount();
+        }
+        System.out.println("Total balance -> " + amount);
     }
 
     private void transactionByTerminal() {
-
+        System.out.println("Enter terminal id: ");
+        String terminalId = new Scanner(System.in).nextLine();
+        List<Transaction> transactionList = transactionRepository.getTransactionByTerminal(terminalId);
+        if (transactionList.isEmpty()) {
+            System.err.println("Wrong terminal id");
+            return;
+        }
+        transactionList.forEach(System.out::println);
     }
 
     private void transactionByCard() {
-
+        System.out.println("Enter card number: ");
+        String cardNumber = new Scanner(System.in).nextLine();
+        List<Transaction> transactionList = transactionRepository.getTransactionByCard(cardNumber);
+        if (transactionList.isEmpty()) {
+            System.err.println("Wrong card number");
+            return;
+        }
+        transactionList.forEach(System.out::println);
     }
 
     public void setProfileService(ProfileService profileService) {
@@ -281,5 +353,13 @@ public class AdminController {
 
     public void setCardService(CardService cardService) {
         this.cardService = cardService;
+    }
+
+    public void setTransactionRepository(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+
+    public void setCardRepository(CardRepository cardRepository) {
+        this.cardRepository = cardRepository;
     }
 }
