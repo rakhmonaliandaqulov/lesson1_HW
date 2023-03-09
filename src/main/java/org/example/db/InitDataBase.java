@@ -55,4 +55,12 @@ public class InitDataBase {
         }
         cardRepository.save(card);
     }
+
+    public void setProfileRepository(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
+
+    public void setCardRepository(CardRepository cardRepository) {
+        this.cardRepository = cardRepository;
+    }
 }
